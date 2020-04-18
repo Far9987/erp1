@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/jee 
+		http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+		">  
+
+	<!-- Action -->
+	<!-- action类对应的bean应该配置scope                                            非单例     -->
+	<bean id="empAction" class="cn.tarena.erp.auth.emp.web.EmpAction" scope="prototype">
+	<property name="empEbi" ref="empEbi"></property>
+	</bean>
+	<!-- Ebi -->
+	<bean id="empEbi" class="cn.tarena.erp.auth.emp.business.ebo.EmpEbo">
+	<property name="empDao" ref="empDao"></property>
+	</bean>
+    <!-- Dao -->
+	<bean id="empDao" class="cn.tarena.erp.auth.emp.dao.impl.EmpImpl">
+	<!-- 注入sessionFactory -->
+	<property name="sessionFactory" ref="sessionFactory"></property><!-- 主配置文件里面的sessionFactory一样 -->
+	</bean>
+
+
+	
+
+
+</beans>	
+	

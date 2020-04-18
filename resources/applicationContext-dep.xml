@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		">  
+	<!-- Action -->
+	<!-- action类对应的bean应该配置scope  非单例     -->
+	<bean id="depAction" class="cn.tarena.erp.auth.dep.web.DepAction" scope="prototype">
+	<property name="depEbi" ref="depEbi"></property>
+	</bean>
+	<!-- Ebi -->
+	<bean id="depEbi" class="cn.tarena.erp.auth.dep.business.ebo.DepEbo">
+	<property name="depDao" ref="depDao"></property>
+	</bean>
+    <!-- Dao -->
+	<bean id="depDao" class="cn.tarena.erp.auth.dep.dao.impl.DepImpl">
+	<!-- 注入sessionFactory -->
+	<property name="sessionFactory" ref="sessionFactory"></property><!-- 主配置文件里面的sessionFactory一样 -->
+	</bean>
+</beans>	
+	

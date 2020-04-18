@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	
+	<listener>
+	  <!-- spring的监听  -->
+	  <!-- 加载spring配置文件applicationContext.xml （服务器启动的同时就是把spring环境启动起来）--> 
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<!-- 读取配置文件，为上面服务的 -->
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext*.xml</param-value>
+	</context-param>
+	
+	<!-- 定义和配置即<filter>和<filter-mapping>是成对出现的。其中的<filter-name>相同则是一对。 -->
+	<!-- 这段代码的主要在作用是为了实现hivernate的延迟加载功能 -->
+	<!-- 作用：Spring管理hibernate的Session，在事务管理的类执行完后，不立刻关闭Session，
+        而将Session保存在一个线程变量中，在线程退出前关闭Session；这样在整个request过程中
+        始终使用一个session，也就可以在request的任何时期lazy loading数据。 -->
+	<filter><!-- 定义一个过滤器的意思 -->
+   		<filter-name>openSessionInView</filter-name>
+   		<filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>
+   		<!-- 引用的具体类文件名。一般引用官方包装好的，名字固定 -->
+	</filter>
+	
+	<filter-mapping><!-- 配置上面那个定义的过滤器 -->
+		<filter-name>openSessionInView</filter-name><!-- 过滤器的名字，可以自己取 -->
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>struts2</filter-name>
+		<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+</web-app>
